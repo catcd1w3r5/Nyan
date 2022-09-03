@@ -1,3 +1,4 @@
+// ReSharper disable UnusedMember.Global
 namespace Nyan;
 
 public enum ReleaseVersion : byte

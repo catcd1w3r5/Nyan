@@ -52,7 +52,7 @@ public class ConsoleApplication
 
     public void DefaultCommands()
     {
-        commands.Response += str => Console.WriteLine(str);
+        commands.Response += Console.WriteLine;
         Debug.Assert(_bot != null, nameof(_bot) + " != null");
         commands.RegisterCommand("stop", async (args, response) =>
         {
@@ -87,7 +87,7 @@ public class ConsoleApplication
         commands.RegisterCommand("help", (_, response) =>
         {
             var sb = new StringBuilder();
-            sb.AppendLine("Available commands (" + commands.commandDic.Count() + "):");
+            sb.AppendLine("Available commands (" + commands.commandDic.Count + "):");
             foreach (var command in commands.commandDic)
             {
                 sb.AppendLine($"{command.Key}");

@@ -8,7 +8,7 @@ public class DynamicCommands
 
         public Task Invoke(string args, Response response)
         {
-            var commands = OnCommand?.Invoke(args, response);
+            using var commands = OnCommand?.Invoke(args, response);
             return commands ?? Task.CompletedTask;
         }
     }
