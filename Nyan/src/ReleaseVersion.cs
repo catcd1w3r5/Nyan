@@ -3,9 +3,9 @@ namespace Nyan;
 
 public enum ReleaseVersion : byte
 {
-    Development,
-    Alpha,
-    Beta,
-    ReleaseCandidate,
-    Release
+    Development = 0,
+    Alpha = 1,
+    Beta = 2,
+    ReleaseCandidate = 3,
+    Release = 4
 }

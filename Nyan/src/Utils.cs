@@ -60,6 +60,8 @@ internal static class Utils
         var pluginFiles = Directory.GetFiles(".\\Plugins", "*.dll");
         var pluginAssemblies =
             pluginFiles.Select(filePath => Assembly.Load(File.ReadAllBytes(Path.GetFullPath(filePath))));
+        //inject this assembly into the plugin assemblies
+        pluginAssemblies = pluginAssemblies.Append(Assembly.GetExecutingAssembly());
         return GetAllOfType<NyanPlugin>(pluginAssemblies).ToImmutableArray();
     }
 }
