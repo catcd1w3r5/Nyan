@@ -58,10 +58,8 @@ internal static class Utils
         if (!Directory.Exists(".\\Plugins")) Directory.CreateDirectory(".\\Plugins");
 
         var pluginFiles = Directory.GetFiles(".\\Plugins", "*.dll");
-        var pluginAssemblies =
-            pluginFiles.Select(filePath => Assembly.Load(File.ReadAllBytes(Path.GetFullPath(filePath))));
-        //inject this assembly into the plugin assemblies
-        pluginAssemblies = pluginAssemblies.Append(Assembly.GetExecutingAssembly());
+        var pluginAssemblies = pluginFiles.Select(Assembly.LoadFrom).ToList();
+        pluginAssemblies.Add(Assembly.GetExecutingAssembly());
         return GetAllOfType<NyanPlugin>(pluginAssemblies).ToImmutableArray();
     }
 }

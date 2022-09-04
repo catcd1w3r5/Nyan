@@ -34,15 +34,6 @@ public class NyanBotInstance
         _ = _bot.Connect().ConfigureAwait(false);
         _bot.RegisterPlugins();
         await Task.Delay(-1, _cancellationToken.Token);
-        // if (!_bot.TryGetPlugin<ConsoleLib>(out var console))
-        //     throw new InvalidOperationException("Console Lib plugin not found");
-        // while (!_cancellationToken.Token.IsCancellationRequested)
-        // {
-        //     var input = Console.ReadLine();
-        //     if (input != null) _ = console.SendMessage(input).ConfigureAwait(false);
-        // }\
-
-        Instance = null!;
     }
 
     private void DefaultCommands()
