@@ -1,6 +1,8 @@
-﻿namespace Nyan;
+﻿using Nyan.Plugins;
 
-public class Nyan : NyanPlugin
+namespace Nyan.Misc;
+
+internal sealed class Nyan : NyanPlugin
 {
     public Nyan() : base("com.Catcd.Nyan")
     {

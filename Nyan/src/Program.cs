@@ -1,8 +1,8 @@
-﻿using Nyan;
+﻿using Nyan.Misc;
 
 try
 {
-    await new NyanBotInstance().Run();
+    await BotInstanceUtils.RunAsync(new DefaultInstance());
 }
 catch (Exception e)
 {
