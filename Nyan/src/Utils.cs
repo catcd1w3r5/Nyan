@@ -6,11 +6,12 @@ namespace Nyan;
 
 internal static class Utils
 {
-    internal static List<T> GetAllOfType<T>(IEnumerable<Assembly> assemblies)
+    private static List<T> GetAllOfType<T>(IEnumerable<Assembly> assemblies)
     {
         var definitionsInstances = new List<T>();
         foreach (var assembly in assemblies)
         {
+            //lots of allocations here, but it's not supposed to run frequently
             var definitions = assembly
                 .GetTypes()
                 .Where(x => typeof(T).IsAssignableFrom(x) && !x.IsAbstract)
@@ -25,12 +26,9 @@ internal static class Utils
 
     internal static async Task<NyanBot?> CreateNyanBot()
     {
-        var token = await GetToken();
-        if (token == null) throw new ArgumentNullException(nameof(token));
-
         var client = new DiscordClient(new DiscordConfiguration
         {
-            Token = token,
+            Token = await GetToken(),
             TokenType = TokenType.Bot
         });
         return new NyanBot
@@ -40,26 +38,28 @@ internal static class Utils
         };
     }
 
-    internal static NyanBot CreateNyanBot(NyanBot old) => new NyanBot
-        {
-            Client = old.Client,
-            Plugins = GetPlugins()
-        };
+    internal static NyanBot CreateNyanBot(NyanBot old) => new()
+    {
+        Client = old.Client,
+        Plugins = GetPlugins()
+    };
 
-    private static async Task<string?> GetToken()
+    private static async Task<string> GetToken()
     {
         if (!File.Exists("token.config")) File.Create("token.config");
         using var reader = new StreamReader("token.config");
         var token = await reader.ReadLineAsync();
+        if (token == null) throw new ArgumentNullException(nameof(token));
         return token;
     }
 
-    internal static ImmutableArray<NyanPlugin> GetPlugins()
+    private static ImmutableArray<NyanPlugin> GetPlugins()
     {
         if (!Directory.Exists(".\\Plugins")) Directory.CreateDirectory(".\\Plugins");
 
         var pluginFiles = Directory.GetFiles(".\\Plugins", "*.dll");
-        var pluginAssemblies = pluginFiles.Select(Path.GetFullPath).Select(Assembly.LoadFile);
+        var pluginAssemblies = pluginFiles.Select(Assembly.LoadFrom).ToList();
+        pluginAssemblies.Add(Assembly.GetExecutingAssembly());
         return GetAllOfType<NyanPlugin>(pluginAssemblies).ToImmutableArray();
     }
 }
