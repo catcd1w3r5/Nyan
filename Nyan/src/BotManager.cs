@@ -3,11 +3,11 @@ using Nyan.Types;
 
 namespace Nyan;
 
-public abstract class BotInstance
+public abstract class BotManager
 {
-    private static BotInstance? _instance;
+    private static BotManager? _instance;
 
-    public static BotInstance Instance
+    public static BotManager Manager
     {
         get => _instance ?? throw new InvalidOperationException();
         private set => _instance = value;
@@ -20,11 +20,10 @@ public abstract class BotInstance
     internal async Task Run_Internal()
     {
         if (_instance != null) throw new InvalidOperationException("Instance already exists");
-        Instance = this;
+        Manager = this;
         await Run();
     }
-
-
+    
     internal void Stop_Internal()
     {
         _instance = null;

@@ -1,6 +1,6 @@
 ﻿namespace Nyan.Misc;
 
-internal sealed class DefaultInstance : BotInstance
+internal sealed class DefaultManager : BotManager
 {
     private readonly CancellationTokenSource _cancellationToken = new();
 
@@ -13,7 +13,7 @@ internal sealed class DefaultInstance : BotInstance
     {
         this.RegisterDefaultCommands();
         _ = Bot.Connect().ConfigureAwait(false);
-        Bot.RegisterPlugins();
+        await Bot.RegisterPlugins();
         await Task.Delay(-1, _cancellationToken.Token);
     }
 }
