@@ -2,7 +2,7 @@
 
 try
 {
-    await BotInstanceUtils.RunAsync(new DefaultInstance());
+    await BotInstanceUtils.RunAsync(new DefaultManager());
 }
 catch (Exception e)
 {

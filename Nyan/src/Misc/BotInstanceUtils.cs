@@ -2,9 +2,9 @@ namespace Nyan.Misc;
 
 public static class BotInstanceUtils
 {
-    public static void Run(BotInstance instance) => instance.Run_Internal().GetAwaiter().GetResult();
+    public static void Run(BotManager manager) => manager.Run_Internal().GetAwaiter().GetResult();
 
-    public static Task RunAsync(BotInstance instance) => instance.Run_Internal();
+    public static Task RunAsync(BotManager manager) => manager.Run_Internal();
     
-    public static void Stop(BotInstance instance) => instance.Stop_Internal();
+    public static void Stop(BotManager manager) => manager.Stop_Internal();
 }

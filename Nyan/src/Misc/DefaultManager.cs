@@ -1,6 +1,6 @@
 ﻿namespace Nyan.Misc;
 
-internal sealed class DefaultInstance : BotInstance
+internal sealed class DefaultManager : BotManager
 {
     private readonly CancellationTokenSource _cancellationToken = new();
 
