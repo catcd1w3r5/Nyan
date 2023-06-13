@@ -9,6 +9,7 @@
         <Nullable>enable</Nullable>
         <RootNamespace>Nyan</RootNamespace>
         <ApplicationIcon>Icon.ico</ApplicationIcon>
+        <LangVersion>11</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
